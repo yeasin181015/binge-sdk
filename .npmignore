@@ -1,0 +1,10 @@
+*.map
+src/
+*.test.ts
+*.spec.ts
+.git
+.gitignore
+.editorconfig
+.npmrc
+rollup.config.ts
+package-lock.json
