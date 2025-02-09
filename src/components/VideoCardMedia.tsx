@@ -16,8 +16,14 @@ import videojs from "video.js";
 const EXTENSION = "/manifest.m3u8";
 const TV_BASE_URL = "https://ott.bingebd.com/live/ngrp:";
 
-export default function VideoCardMedia({ video }: { video: ProductType }) {
-  const [mute, setVolumeStatus] = useState<boolean>(false);
+export default function VideoCardMedia({
+  video,
+  isActive,
+}: {
+  video: ProductType;
+  isActive: boolean;
+}) {
+  const [mute, setVolumeStatus] = useState<boolean>(true);
   let video_url = video.hls_url || video.hls_link;
 
   if (video.content_type === "tv_channel") {
@@ -174,40 +180,39 @@ export default function VideoCardMedia({ video }: { video: ProductType }) {
             objectFit: "contain",
             position: "absolute",
             zIndex: 50,
-            animation: `${
-              checkIfTrailerIsAvailable(video)
-                ? "hide 1s ease-in-out forwards"
-                : ""
-            }`,
-
-            [`@keyframes hide`]: {
-              to: {
-                display: "none",
-              },
-            },
+            display:
+              video.trailer_link && video.trailer_link.length > 0
+                ? isActive
+                  ? "none"
+                  : "block"
+                : "block",
+            visibility:
+              video.trailer_link && video.trailer_link.length > 0
+                ? isActive
+                  ? "hidden"
+                  : "visible"
+                : "visible",
           }}
         />
         <VideoJSPlayer
           //@ts-ignore
           _hlsStreamUrl={video.trailer_link}
           muted={mute}
+          isActive={isActive}
           //@ts-ignore
-          playerRef={playerRef}
           sx={{
             position: "absolute",
-            animation: `show 1s ease-out-in forwards`,
-            display: "none",
-            animationDelay: "1s",
-            [`@keyframes show`]: {
-              to: {
-                display: "block",
-              },
-            },
+            display:
+              video.trailer_link && video.trailer_link.length > 0
+                ? isActive
+                  ? "block"
+                  : "none"
+                : "none",
           }}
         />
       </Box>
 
-      {checkIfTrailerIsAvailable(video) && (
+      {/* {checkIfTrailerIsAvailable(video) && (
         <Box
           sx={{
             display: "flex",
@@ -256,7 +261,7 @@ export default function VideoCardMedia({ video }: { video: ProductType }) {
             {!mute ? <VolumeHigh /> : <VolumeOff />}
           </NetflixIconButton>
         </Box>
-      )}
+      )} */}
     </Box>
   );
 }

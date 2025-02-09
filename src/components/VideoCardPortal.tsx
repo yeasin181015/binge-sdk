@@ -41,9 +41,9 @@ export default function VideoCardModal({
           backgroundColor: "#181818",
         }}
       >
-        <a href={`/playing-${video.content_type}/${video.id}`}>
+        {/* <a href={`/playing-${video.content_type}/${video.id}`}>
           <VideoCardMedia video={video} />
-        </a>
+        </a> */}
         <VideoCardPortalDescription video={video} />
       </CardContent>
     </Card>
