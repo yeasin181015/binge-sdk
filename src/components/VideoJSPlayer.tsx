@@ -76,7 +76,7 @@ export default function VideoJSPlayer({
     console.log("Before videojs call:", videoElement);
     try {
       player = videojs("video_vdrm", {
-        muted: muted,
+        muted: true,
         autoplay: true,
         liveui: true,
         loop: true,
@@ -103,6 +103,7 @@ export default function VideoJSPlayer({
           promise
             .then(() => {})
             .catch((_error: any) => {
+              console.log('coming here--------------', _error);
               player.play();
             });
         }

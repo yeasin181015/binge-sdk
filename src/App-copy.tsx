@@ -10,8 +10,6 @@ import { GetCookiesValue } from "./utils/cookie";
 import { useAnonToken } from "./hooks/useAnonToken";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import TopContainer from "./components/TopContainer";
-import TextContainer from "./components/TextContainer";
 
 export interface CategoryProps {
   id?: number;
@@ -92,8 +90,7 @@ function App() {
           setPortal(null, null);
         }}
       >
-        <TopContainer />
-        <TextContainer />
+        <Banner data={banners} />
         <Box
           sx={{
             zIndex: 1,
