@@ -1,17 +1,19 @@
 "use client";
 import { Box, Container, Typography, Button, useMediaQuery } from "@mui/material";
 import { ReactComponent as WatchIcon } from "../images/watch.svg";
+import "@fontsource/manrope";
+import "@fontsource/manrope/700.css";
 
 const TopContainer = () => {
   const isXs = useMediaQuery("(max-width:600px)");
-  const isLg = useMediaQuery("(min-width:1200px)"); 
+  const isLg = useMediaQuery("(min-width:1200px)");
 
-  let imageSrc = "/assets/images/HeroImage.png"; 
+  let imageSrc = "/assets/images/HeroImage.png";
 
   if (isXs) {
-    imageSrc = "/assets/images/HeroImage.png"; 
+    imageSrc = "/assets/images/HeroImage.png";
   } else if (isLg) {
-    imageSrc = "/assets/images/HeroImage.png"; 
+    imageSrc = "/assets/images/HeroImage.png";
   }
 
   return (
@@ -27,7 +29,7 @@ const TopContainer = () => {
         <img
           src={imageSrc}
           alt="hero"
-          style={{ width: "80%", height: "auto" }}
+          style={{ width: "80%", maxWidth: "1003px", height: "auto" }}
         />
       </Box>
 
@@ -41,10 +43,10 @@ const TopContainer = () => {
           display: "flex",
           alignItems: "center",
           background:
-            "linear-gradient(to right, #464A54 0%, #464A54 27%, rgba(255, 255, 255, 0.00))",
+            "linear-gradient(to right, #464A54 0%, #464A54 47%, rgba(255, 255, 255, 0.00))",
         }}
       >
-        <Container sx={{ zIndex: 1, marginLeft: {xs: '40px', lg:'161px'}}}>
+        <Container sx={{ zIndex: 1, marginLeft: { xs: "40px", lg: "161px" } }}>
           <Typography
             variant="h3"
             sx={{
@@ -62,7 +64,7 @@ const TopContainer = () => {
               alt="binge"
               sx={{ width: { xs: 100, lg: 165 } }}
             />
-            <span>is an online video</span>
+            <span className="banner-text">is an online video</span>
           </Typography>
           <Typography
             variant="h3"
@@ -70,10 +72,23 @@ const TopContainer = () => {
               fontWeight: 700,
               fontSize: { xs: "25px", lg: "48px" },
               color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
-            streaming platform
+            <span
+              className="banner-text"
+              style={{
+                color: "#EEEFFC",
+                marginTop: "0px",
+                marginBottom: "0px",
+              }}
+            >
+              streaming platform
+            </span>
           </Typography>
+
           <Button
             sx={{
               background: "#FF4A50",
