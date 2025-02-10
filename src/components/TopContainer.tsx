@@ -9,7 +9,7 @@ const TopContainer = () => {
   let imageSrc = "/assets/images/HeroImage.png"; 
 
   if (isXs) {
-    imageSrc = "/assets/images/HeroImage-Portrait.png"; 
+    imageSrc = "/assets/images/HeroImage.png"; 
   } else if (isLg) {
     imageSrc = "/assets/images/HeroImage.png"; 
   }
