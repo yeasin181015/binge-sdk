@@ -1,7 +1,7 @@
 "use client";
 import { Box, Container, Typography, Button } from "@mui/material";
 import { styled } from "@mui/system";
-import {ReactComponent as WatchIcon} from '../images/watch.svg';
+import { ReactComponent as WatchIcon } from "../images/watch.svg";
 
 const HeaderWrapper = styled(Box)({
   position: "relative",
@@ -29,7 +29,7 @@ const TopContainer = () => {
   return (
     <HeaderWrapper
       sx={{
-        height: { xs: "114px", lg: "402px" },
+        height: { xs: "190px", lg: "402px" },
       }}
     >
       <GradientOverlay />
@@ -41,58 +41,63 @@ const TopContainer = () => {
         }}
         disableGutters
       >
-        <Box sx={{width: '569px'}}>
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "28px", lg: "48px" },
-            color: "#fff",
-            display: "flex",
-            justifyContent: "center",
-            gap: "8px",
-            marginLeft: "40px",
-          }}
-        >
-          <img
-            src="/assets/images/binge-logo.svg"
-            alt="binge"
-            style={{ width: "165px", height: "65px", marginLeft: "0" }}
-          />{" "}
-          <span>is an online video</span>
-        </Typography>
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "28px", lg: "48px" },
-            color: "#fff",
-            marginLeft: "40px",
-          }}
-        >
-          streaming platfom
-        </Typography>
-        <Button
-          sx={{
-            background: "#FF4A50",
-            borderRadius: "32px",
-            display: "flex",
-            justifyCoontent: 'center',
-            padding: "12px 18px",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "6px",
-            color: "#fff",
-            textTransform: "none",
-            marginLeft: "40px",
-            fontSize: '16px',
-            fontWeight: '600',
-            marginTop: '47px',
-          }}
-        >
-          Watch Now
-          <WatchIcon />
-        </Button>
+        <Box sx={{ width: "569px" }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 700,
+              fontSize: { xs: "20px", lg: "48px" },
+              color: "#fff",
+              display: "flex",
+              justifyContent: "center",
+              gap: "8px",
+              marginLeft: "40px",
+            }}
+          >
+            <Box
+              component="img"
+              src="/assets/images/binge-logo.svg"
+              alt="binge"
+              sx={{
+                width: {xs: 120, lg:165},
+                // height: {xs: 50, lg:65},
+                ml: 0, // Equivalent to marginLeft: "0"
+              }}
+            />{" "}
+            <span>is an online video</span>
+          </Typography>
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 700,
+              fontSize: { xs: "20px", lg: "48px" },
+              color: "#fff",
+              marginLeft: "40px",
+            }}
+          >
+            streaming platfom
+          </Typography>
+          <Button
+            sx={{
+              background: "#FF4A50",
+              borderRadius: "32px",
+              display: "flex",
+              justifyCoontent: "center",
+              padding: "12px 18px",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "6px",
+              color: "#fff",
+              textTransform: "none",
+              marginLeft: "40px",
+              fontSize: "16px",
+              fontWeight: "600",
+              marginTop: "47px",
+            }}
+          >
+            Watch Now
+            <WatchIcon />
+          </Button>
         </Box>
       </Container>
     </HeaderWrapper>

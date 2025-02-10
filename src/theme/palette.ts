@@ -79,6 +79,12 @@ const palette = {
   background: { default: PRIMARY.main, paper: PRIMARY.main },
   mode: "dark" as PaletteMode,
   breakpoints: breakPoints,
+  typography: {
+    fontFamily: [
+      'Manrope',
+      'sans-serif',
+    ].join(','),
+ }
 };
 
 export default palette;
