@@ -14,6 +14,8 @@ import CustomNavigation from "./CustomNavigation";
 import Image from "./Image";
 import RowSkeleton from "./RowSkeleton";
 import NetflixNavigationLink from "./NetflixNavigationLink";
+import VideoCardMedia from "./VideoCardMedia";
+import videojs from "video.js";
 
 export const LOCAL_BASE_URL = "https://web-api.binge.buzz";
 
@@ -36,7 +38,6 @@ const StyledSlider = styled(Slider)<{
     padding: number;
     visibleOverflow: boolean;
   }) => ({
-    border: "solid 1px white",
     display: "flex", // removed !important
     justifyContent: "center",
     overflow: "initial", // removed !important
@@ -143,14 +144,18 @@ export default function SlickSlider({
     setActiveSlideIndex(nextIndex);
   };
 
+  const afterChange = async (currentIndex: number) => {
+    // console.log(currentIndex, "current index");
+    // playActiveVideo(currentIndex);
+  };
+
   const settings: Settings = {
     speed: 500,
     infinite: false,
     arrows: false,
     lazyLoad: "ondemand",
     slidesToShow: type === "cardNoHover" ? 4 : 6,
-    slidesToScroll: type === "cardNoHover" ? 4 : 6,
-    afterChange: (current) => {},
+    afterChange,
     beforeChange,
     onEdge: (direction) => {},
     responsive: [
@@ -158,35 +163,44 @@ export default function SlickSlider({
         breakpoint: 1536,
         settings: {
           slidesToShow: type === "cardNoHover" ? 4 : 5,
-          slidesToScroll: type === "cardNoHover" ? 4 : 5,
-          infinite: nextShow,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 1200,
         settings: {
           slidesToShow: type === "cardNoHover" ? 3 : 5,
-          slidesToScroll: type === "cardNoHover" ? 3 : 5,
-          infinite: nextShow,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 900,
         settings: {
           slidesToShow: type === "cardNoHover" ? 2 : 3,
-          slidesToScroll: type === "cardNoHover" ? 2 : 3,
-          infinite: nextShow,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: nextShow,
+          slidesToScroll: 1,
         },
       },
     ],
+  };
+
+  const playActiveVideo = (currentSlide: number) => {
+    const videoPlayers = document.querySelectorAll(".video-js");
+    videoPlayers.forEach((player, index) => {
+      if (index === currentSlide) {
+        const videojsPlayer = videojs(player);
+        videojsPlayer.play();
+      } else {
+        const videojsPlayer = videojs(player);
+        videojsPlayer.pause();
+      }
+    });
   };
 
   const handlePrevious = () => {
@@ -222,7 +236,7 @@ export default function SlickSlider({
               spacing={2}
               direction="row"
               alignItems="center"
-              sx={{ mb: 1, pl: { xs: "25px", sm: "50px" } }}
+              sx={{ mb: 1 }}
             >
               <NetflixNavigationLink
                 to={`/categories/${categories.category_id}/${categories.category_type}/${categories.tile_type}`}
@@ -246,16 +260,15 @@ export default function SlickSlider({
                   {...settings}
                   padding={ARROW_MAX_WIDTH}
                   theme={theme}
+                  slidesToScroll={1}
                 >
                   {data
                     // .filter((i) => !!i.backdrop_path)
-                    .map((item) => {
+                    .map((item, index) => {
                       return (
-                        <SlideItem
-                          key={item.id}
-                          item={item}
-                          type={type}
-                          tile={categories?.tile_type}
+                        <VideoCardMedia
+                          video={item}
+                          isActive={index === activeSlideIndex}
                         />
                       );
                       // <p>Name</p>
@@ -274,17 +287,16 @@ export default function SlickSlider({
             {...adImgSettings}
             padding={ARROW_MAX_WIDTH}
             theme={theme}
+            slidesToScroll={1}
             // tile={genre?.tile_type}
             // screenWidth={screenWidth}
           >
             {data.length &&
               data.map((movie, index) => {
-                console.log("movie", movie);
                 return (
-                  <Image
-                    key={index}
-                    path={movie.image_path}
-                    sx={{ margin: "auto", maxHeight: 300, maxWidth: "75%" }}
+                  <VideoCardMedia
+                    video={movie}
+                    isActive={index === activeSlideIndex}
                   />
                 );
               })}

@@ -1,11 +1,9 @@
-import { useEffect, useRef } from "react";
+import { Box } from "@mui/material";
+import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import videojs from "video.js";
-import "video.js/dist/video-js.css";
-import "videojs-youtube";
 import "video.js/dist/video-js.css";
 import Player from "video.js/dist/types/player";
 import { GetCookiesValue } from "../utils/cookie";
-import { debug } from "console";
 
 function checkLiveOrStage() {
   const env =
@@ -51,125 +49,112 @@ function drmCall(bingeToken: string) {
   };
 }
 
-export default function VideoJSPlayer({
+const VideoJSPlayer = ({
   _hlsStreamUrl,
-  muted,
-  playerRef,
-  style,
+  isActive,
 }: {
   _hlsStreamUrl: string;
-  muted: boolean;
-  playerRef: Player | null;
-  style: any;
-}) {
-  let player: any;
-
-  const bingeToken = GetCookiesValue("jwtToken", false);
-
-  function fireError() {
-    player.pause();
-    player.dispose();
-  }
-
-  useEffect(() => {
-    const videoElement = document.getElementById("video_vdrm");
-    console.log("Before videojs call:", videoElement);
-    try {
-      player = videojs("video_vdrm", {
-        muted: true,
-        autoplay: true,
-        liveui: true,
-        loop: true,
-        responsive: true,
-        fluid: true,
-        debug: true,
-        techOrder: ["html5"],
-        html5: {
-          vhs: {
-            overrideNative: true,
-          },
-          nativeAudioTracks: false,
-          nativeVideoTracks: false,
-        },
-      });
-
-      player.on("loadedmetadata", () => {
-        // Hide the poster image
-      });
-
-      player.ready(() => {
-        let promise = player.play();
-        if (promise !== undefined) {
-          promise
-            .then(() => {})
-            .catch((_error: any) => {
-              console.log('coming here--------------', _error);
-              player.play();
-            });
-        }
-      });
-      player.on("play", function (_e: any) {
-        player.posterImage.hide();
-      });
-      player.on("loadstart", function (_e: any) {
-        player.posterImage.show();
-        drmCall(bingeToken);
-      });
-      player.on("error", function () {
-        if (player.error()) {
-          fireError();
-        }
-      });
-
-      if (_hlsStreamUrl === null || _hlsStreamUrl === undefined) {
-        player.dispose();
-        player = null;
-      }
-      console.log("before catch:", document.getElementById("video_vdrm"));
-    } catch (err) {
-      console.log(err, "error");
-    }
-    console.log(
-      "outside try catch block:",
-      document.getElementById("video_vdrm")
-    );
-  }, []);
-
-  useEffect(() => {
-    if (_hlsStreamUrl) {
-      try {
-        player.src({
-          fluid: true,
-          src: _hlsStreamUrl,
-          type: _hlsStreamUrl.endsWith(".mpd")
-            ? "application/dash+xml"
-            : "application/x-mpegURL",
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, [_hlsStreamUrl]);
-
-  useEffect(
-    () => () => {
-      if (player) {
-        if (!player["isDisposed_"]) {
-          player.dispose();
-        }
-        player = null;
-      }
+  isActive: boolean;
+}) => {
+  const videoJsOptions = {
+    autoplay: isActive,
+    muted: isActive,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    experimentalSvgIcons: true,
+    playbackRates: [0.5, 1, 1.5, 2],
+    controlBar: {
+      skipButtons: {
+        forward: 10,
+        backward: 10,
+      },
     },
-    []
-  );
+    sources: [
+      {
+        src: _hlsStreamUrl,
+        type: _hlsStreamUrl?.endsWith(".mpd")
+          ? "application/dash+xml"
+          : "application/x-mpegURL",
+      },
+    ],
+  };
 
+  const VideoPlayer = (props: { options: any; onReady: any }) => {
+    const videoRef = useRef<HTMLElement | null>(null);
+    const playerRef = useRef<Player | null>(null);
+    const [playbackRate, setPlaybackRate] = useState(1);
+    const { options, onReady } = props;
+
+    const bingeToken = GetCookiesValue("jwtToken", false);
+
+    useEffect(() => {
+      if (!playerRef.current) {
+        const videoElement = document.createElement("video-js");
+
+        videoElement.classList.add("vjs-big-play-centered");
+        videoRef.current!.appendChild(videoElement);
+
+        const player = ((playerRef.current as any) = videojs(
+          videoElement,
+          options,
+          () => {
+            videojs.log("player is ready");
+            onReady && onReady(player);
+          }
+        ));
+        player.on("loadstart", function (_e: any) {
+          drmCall(bingeToken);
+        });
+      } else {
+        const player = playerRef.current;
+
+        (playerRef.current as Player).autoplay(options.autoplay);
+        player.src(options.sources);
+      }
+    }, [options, videoRef]);
+
+    useEffect(() => {
+      if (playerRef.current) {
+        playerRef?.current?.playbackRate(playbackRate);
+      }
+    }, [playbackRate]);
+
+    useEffect(() => {
+      const player = playerRef.current;
+
+      return () => {
+        if (player && !player.isDisposed()) {
+          player.dispose();
+          playerRef.current = null;
+        }
+      };
+    }, [playerRef]);
+
+    return (
+      <>
+        <div data-vjs-player style={{ width: "100%", height: "100%" }}>
+          <div ref={videoRef as LegacyRef<HTMLDivElement> | undefined} />
+        </div>
+        <style>
+          {`
+          .vjs-loading-spinner {
+            margin-top: 0 !important;
+            margin-left: 0 !important;
+          }
+        `}
+        </style>
+      </>
+    );
+  };
   return (
-    <video
-      id={"video_vdrm"}
-      className="video-js"
-      style={{ width: "100%", aspectRatio: "16/9 !important" }}
-      //@ts-ignore
-      ref={playerRef}
-    ></video>
+    <div>
+      <VideoPlayer
+        options={videoJsOptions}
+        onReady={() => console.log("The video is ready to play")}
+      />
+    </div>
   );
-}
+};
+
+export default VideoJSPlayer;

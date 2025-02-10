@@ -68,7 +68,7 @@ function App() {
     const response = await res.json();
     setBanners(response.banners);
     const resAllCatData = await resAllCat.json();
-    setCategoryList(resAllCatData.categories);
+    setCategoryList(resAllCatData.categories.slice(0, 1));
   };
 
   useEffect(() => {
