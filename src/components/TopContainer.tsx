@@ -1,47 +1,39 @@
 "use client";
 import { Box, Container, Typography, Button } from "@mui/material";
-import { styled } from "@mui/system";
 import { ReactComponent as WatchIcon } from "../images/watch.svg";
-
-const HeaderWrapper = styled(Box)({
-  position: "relative",
-  width: "100%",
-  backgroundImage: `url('/assets/images/HeroImage.png')`,
-  backgroundSize: "85% auto",
-  backgroundPosition: "right center",
-  backgroundRepeat: "no-repeat",
-  display: "flex",
-  alignItems: "center",
-});
-
-const GradientOverlay = styled(Box)({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  // background: "linear-gradient(to right, #F8F8F8 27%, #FFFFFF00)",
-  background:
-    "linear-gradient(to right, #464A54 0%, #464A54 27%, rgba(255, 255, 255, 0.00))",
-});
 
 const TopContainer = () => {
   return (
-    <HeaderWrapper
-      sx={{
-        height: { xs: "190px", lg: "402px" },
-      }}
-    >
-      <GradientOverlay />
-      <Container
-        maxWidth="lg"
+    <Box sx={{ position: "relative" }}>
+      <Box
         sx={{
-          zIndex: 1,
-          padding: { xs: 2, lg: 0 },
+          position: "relative",
+          display: "flex",
+          justifyContent: "end",
+          width: "100%",
         }}
-        disableGutters
       >
-        <Box sx={{ width: "569px" }}>
+        <img
+          src="/assets/images/HeroImage.png"
+          alt="hero"
+          style={{ width: "80%", height: "auto" }}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "80%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          background:
+            "linear-gradient(to right, #464A54 0%, #464A54 27%, rgba(255, 255, 255, 0.00))",
+        }}
+      >
+        <Container sx={{ zIndex: 1, paddingLeft: { xs: 2, lg: 4 } }}>
           <Typography
             variant="h3"
             sx={{
@@ -49,21 +41,16 @@ const TopContainer = () => {
               fontSize: { xs: "20px", lg: "48px" },
               color: "#fff",
               display: "flex",
-              justifyContent: "center",
+              alignItems: "center",
               gap: "8px",
-              marginLeft: "40px",
             }}
           >
             <Box
               component="img"
               src="/assets/images/binge-logo.svg"
               alt="binge"
-              sx={{
-                width: {xs: 120, lg:165},
-                // height: {xs: 50, lg:65},
-                ml: 0, // Equivalent to marginLeft: "0"
-              }}
-            />{" "}
+              sx={{ width: { xs: 120, lg: 165 } }}
+            />
             <span>is an online video</span>
           </Typography>
           <Typography
@@ -75,32 +62,32 @@ const TopContainer = () => {
               marginLeft: "40px",
             }}
           >
-            streaming platfom
+            streaming platform
           </Typography>
           <Button
             sx={{
               background: "#FF4A50",
               borderRadius: "32px",
               display: "flex",
-              justifyCoontent: "center",
-              padding: "12px 18px",
               justifyContent: "center",
               alignItems: "center",
               gap: "6px",
+              padding: { xs: "8px 14px", lg: "12px 18px" },
               color: "#fff",
               textTransform: "none",
-              marginLeft: "40px",
-              fontSize: "16px",
+              fontSize: { xs: "14px", lg: "16px" },
               fontWeight: "600",
-              marginTop: "47px",
+              marginLeft: "40px",
+              marginTop: "30px",
             }}
           >
             Watch Now
-            <WatchIcon />
+            <WatchIcon style={{ width: "16px", height: "16px" }} />
           </Button>
-        </Box>
-      </Container>
-    </HeaderWrapper>
+        </Container>
+      </Box>
+    </Box>
   );
 };
+
 export default TopContainer;

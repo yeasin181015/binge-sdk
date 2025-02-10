@@ -94,7 +94,7 @@ function App() {
       >
         <TopContainer />
         <TextContainer />
-        <Box
+        {/* <Box
           sx={{
             zIndex: 1,
             margin: "unset",
@@ -112,7 +112,7 @@ function App() {
               />
             </Box>
           ))}
-        </Box>
+        </Box> */}
       </Stack>
       <VideoPortalContainer />
     </Box>
