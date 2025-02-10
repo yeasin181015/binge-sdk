@@ -1,8 +1,19 @@
 "use client";
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Box, Container, Typography, Button, useMediaQuery } from "@mui/material";
 import { ReactComponent as WatchIcon } from "../images/watch.svg";
 
 const TopContainer = () => {
+  const isXs = useMediaQuery("(max-width:600px)");
+  const isLg = useMediaQuery("(min-width:1200px)"); 
+
+  let imageSrc = "/assets/images/HeroImage.png"; 
+
+  if (isXs) {
+    imageSrc = "/assets/images/HeroImage-Portrait.png"; 
+  } else if (isLg) {
+    imageSrc = "/assets/images/HeroImage.png"; 
+  }
+
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -14,7 +25,7 @@ const TopContainer = () => {
         }}
       >
         <img
-          src="/assets/images/HeroImage.png"
+          src={imageSrc}
           alt="hero"
           style={{ width: "80%", height: "auto" }}
         />
@@ -33,12 +44,12 @@ const TopContainer = () => {
             "linear-gradient(to right, #464A54 0%, #464A54 27%, rgba(255, 255, 255, 0.00))",
         }}
       >
-        <Container sx={{ zIndex: 1, paddingLeft: { xs: 2, lg: 4 } }}>
+        <Container sx={{ zIndex: 1, marginLeft: {xs: '40px', lg:'161px'}}}>
           <Typography
             variant="h3"
             sx={{
               fontWeight: 700,
-              fontSize: { xs: "20px", lg: "48px" },
+              fontSize: { xs: "25px", lg: "48px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -49,7 +60,7 @@ const TopContainer = () => {
               component="img"
               src="/assets/images/binge-logo.svg"
               alt="binge"
-              sx={{ width: { xs: 120, lg: 165 } }}
+              sx={{ width: { xs: 100, lg: 165 } }}
             />
             <span>is an online video</span>
           </Typography>
@@ -57,9 +68,8 @@ const TopContainer = () => {
             variant="h3"
             sx={{
               fontWeight: 700,
-              fontSize: { xs: "20px", lg: "48px" },
+              fontSize: { xs: "25px", lg: "48px" },
               color: "#fff",
-              marginLeft: "40px",
             }}
           >
             streaming platform
@@ -77,7 +87,6 @@ const TopContainer = () => {
               textTransform: "none",
               fontSize: { xs: "14px", lg: "16px" },
               fontWeight: "600",
-              marginLeft: "40px",
               marginTop: "30px",
             }}
           >

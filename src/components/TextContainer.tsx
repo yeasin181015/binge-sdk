@@ -1,18 +1,14 @@
 "use client";
-import { Box, Typography, Button } from "@mui/material";
-import { styled } from "@mui/system";
-import { ReactComponent as WatchIcon } from "../images/watch.svg";
+import { Box, Typography } from "@mui/material";
 
 const TextContainer = () => {
   return (
-    <div style={{ fontFamily: "Manrope" }}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          mx: "auto",
+          mx: {xs: "40px !important", md: "200px !important", lg: "340px !important"},
+          mt: "43px !important",
         }}
       >
         <Typography
@@ -38,7 +34,6 @@ const TextContainer = () => {
           Hollywood Movies.
         </Typography>
       </Box>
-    </div>
   );
 };
 export default TextContainer;
