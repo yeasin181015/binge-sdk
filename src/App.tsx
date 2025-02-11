@@ -68,7 +68,7 @@ function App() {
     const response = await res.json();
     setBanners(response.banners);
     const resAllCatData = await resAllCat.json();
-    setCategoryList(resAllCatData.categories.slice(0, 1));
+    setCategoryList(resAllCatData.categories.slice(1, 2));
   };
 
   useEffect(() => {
@@ -97,12 +97,11 @@ function App() {
         <Box
           sx={{
             zIndex: 1,
-            margin: "unset",
-            marginTop: "135px !important",
+            marginTop: "100px !important",
           }}
         >
           {categoryList?.map((item, index) => (
-            <Box key={item.category_id} sx={{ paddingTop: "2rem" }}>
+            <Box key={item.category_id}>
               <SliderRowForGenre
                 key={item.category_id}
                 category={item}

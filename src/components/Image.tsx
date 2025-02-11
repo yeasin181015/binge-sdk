@@ -7,7 +7,7 @@ const checkContentImageUrl = (imgUrl: string) => {
   }
 };
 
-function Image({ path, sx }: { path: string; sx: any }) {
+function Image({ path, sx }: { path: string; sx?: any }) {
   const onMediaFallback = (event: { target: any }) => {
     const { target } = event;
     target.src = "/assets/images/landscape.png";

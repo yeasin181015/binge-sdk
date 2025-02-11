@@ -19,3 +19,31 @@ body {
   font-weight: 700 !important;
   font-style: normal !important;
 }
+
+.binge-text {
+  font-family: "Manrope", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+}
+
+.slick-slide.slick-active {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.slick-list {
+  height: 245px
+}
+
+@media only screen and (max-width: 600px) {
+  .slick-list {
+    height: 345px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .slick-list {
+    height: 200px;
+  }
+}
+
+
+
