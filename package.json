@@ -79,7 +79,7 @@
     "youbora-adapter-videojs": "^6.8.21"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && copy /y dist\\* .\\",
     "start": "react-scripts start"
   },
   "eslintConfig": {
