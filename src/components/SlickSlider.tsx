@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import { motion } from "framer-motion";
 import { styled, Theme, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import { Box, IconButton } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { useMediaQuery } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -11,77 +11,16 @@ import SimilarVideoCard from "./SimilarVideoCard";
 import VideoItemWithHover from "./VideoItemWithHover";
 import { CategoryProps } from "../App";
 import CustomNavigation from "./CustomNavigation";
-import Image from "./Image";
 import RowSkeleton from "./RowSkeleton";
 import NetflixNavigationLink from "./NetflixNavigationLink";
 import VideoCardMedia from "./VideoCardMedia";
 import videojs from "video.js";
+import Image from "./Image";
+import VideoJSPlayer from "./VideoJSPlayer";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const LOCAL_BASE_URL = "https://web-api.binge.buzz";
-
-const ARROW_MAX_WIDTH = 50;
-const RootStyle = styled("div")(() => ({
-  position: "relative",
-  overflow: "inherit",
-}));
-
-const StyledSlider = styled(Slider)<{
-  padding: number;
-  visibleOverflow: boolean;
-}>(
-  ({
-    theme,
-    padding,
-    visibleOverflow,
-  }: {
-    theme: Theme;
-    padding: number;
-    visibleOverflow: boolean;
-  }) => ({
-    display: "flex", // removed !important
-    justifyContent: "center",
-    overflow: "initial", // removed !important
-    "& > .slick-list": {
-      overflow: visibleOverflow ? "visible" : "hidden",
-    },
-    [theme.breakpoints.up("sm")]: {
-      "& > .slick-list": {
-        width: `calc(100% - ${2 * padding}px)`,
-      },
-      "& .slick-list > .slick-track": {
-        margin: "0px", // removed !important
-      },
-      "& .slick-list > .slick-track > .slick-current > div > .BingeBox-root > .BingePaper-root:hover":
-        {
-          transformOrigin: "0% 50%",
-        },
-    },
-    [theme.breakpoints.down("sm")]: {
-      "& > .slick-list": {
-        width: `calc(100% - ${padding}px)`,
-      },
-    },
-  })
-);
-
-interface SlideItemProps {
-  item: ProductType;
-  type?: string;
-  tile?: number;
-}
-
-function SlideItem({ item, type, tile }: SlideItemProps) {
-  return (
-    <Box sx={{ pr: 0.5 }}>
-      {type === "cardNoHover" ? (
-        <SimilarVideoCard video={item} />
-      ) : (
-        <VideoItemWithHover video={item} tile={tile} />
-      )}
-    </Box>
-  );
-}
-
 interface SlickSliderProps {
   data: any[];
   categories: CategoryProps;
@@ -90,6 +29,7 @@ interface SlickSliderProps {
   type?: string;
   visibleOverflow?: boolean;
 }
+
 export default function SlickSlider({
   data,
   categories,
@@ -98,6 +38,7 @@ export default function SlickSlider({
   type,
   visibleOverflow,
 }: SlickSliderProps) {
+  console.log(data);
   const sliderRef = useRef<Slider>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [showExplore, setShowExplore] = useState(false);
@@ -109,14 +50,7 @@ export default function SlickSlider({
   const matchesXs = useMediaQuery("(max-width:700px)");
   const matchesXxs = useMediaQuery("(max-width:450px)");
   const matches1200 = useMediaQuery("(max-width:1200px)");
-
-  // async function fetchBaseUrl() {
-  //   const base = await baseURL();
-  //   setBaseUrl(base);
-  // }
-  // useEffect(() => {
-  //   fetchBaseUrl();
-  // }, []);
+  const [mute, setVolumeStatus] = useState<boolean>(true);
 
   useEffect(() => {
     if (sliderRef.current && sliderRef.current.props.slidesToShow) {
@@ -126,7 +60,7 @@ export default function SlickSlider({
           (matchesXs && data.length >= 4) ||
           (matchesSm && data.length >= 5) ||
           (matches1200 && data.length >= 6)
-      ); // (matches1200 && movies.length >= 6) this condition showing slider arrow if the screen is less than 1200 px and there is more than 6 contents
+      );
     }
   }, [sliderRef.current, matches1200]);
 
@@ -144,65 +78,6 @@ export default function SlickSlider({
     setActiveSlideIndex(nextIndex);
   };
 
-  const afterChange = async (currentIndex: number) => {
-    // console.log(currentIndex, "current index");
-    // playActiveVideo(currentIndex);
-  };
-
-  const settings: Settings = {
-    speed: 500,
-    infinite: false,
-    arrows: false,
-    lazyLoad: "ondemand",
-    slidesToShow: type === "cardNoHover" ? 4 : 6,
-    afterChange,
-    beforeChange,
-    onEdge: (direction) => {},
-    responsive: [
-      {
-        breakpoint: 1536,
-        settings: {
-          slidesToShow: type === "cardNoHover" ? 4 : 5,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: type === "cardNoHover" ? 3 : 5,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: type === "cardNoHover" ? 2 : 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
-  const playActiveVideo = (currentSlide: number) => {
-    const videoPlayers = document.querySelectorAll(".video-js");
-    videoPlayers.forEach((player, index) => {
-      if (index === currentSlide) {
-        const videojsPlayer = videojs(player);
-        videojsPlayer.play();
-      } else {
-        const videojsPlayer = videojs(player);
-        videojsPlayer.pause();
-      }
-    });
-  };
-
   const handlePrevious = () => {
     sliderRef.current?.slickPrev();
   };
@@ -211,97 +86,137 @@ export default function SlickSlider({
     sliderRef.current?.slickNext();
   };
 
-  const adImgSettings = {
-    dots: false,
-    infinite: true,
+  function SampleNextArrow(props: any) {
+    const { className, style, onClick } = props;
+    return (
+      <Box
+        className={className} // Ensure the className is included
+        onClick={onClick}
+        sx={{
+          ...style,
+          top: "50%",
+          right: "10px", // Ensure it's visible
+          transform: "translateY(-50%)",
+          zIndex: 10, // Make sure it's above slides
+          display: "block !important", // Override any hidden styles
+          cursor: "pointer",
+          position: "absolute",
+        }}
+      >
+        <ArrowForwardIosIcon sx={{ fontSize: 20, color: "black" }} />
+      </Box>
+    );
+  }
+
+  function SamplePrevArrow(props: any) {
+    const { className, style, onClick } = props;
+    return (
+      <Box
+        className={className} // Ensure the className is included
+        onClick={onClick}
+        sx={{
+          ...style,
+          top: "50%",
+          left: "0px", // Ensure it's visible
+          transform: "translateY(-50%)",
+          zIndex: 10, // Make sure it's above slides
+          display: "block !important", // Override any hidden styles
+          cursor: "pointer",
+          position: "absolute",
+        }}
+      >
+        <ArrowBackIosIcon sx={{ fontSize: 20, color: "black" }} />
+      </Box>
+    );
+  }
+
+  const settings: Settings = {
     speed: 500,
-    slidesToShow: 1,
+    infinite: false,
+    arrows: false,
+    slidesToShow: 3.5,
     slidesToScroll: 1,
-    autoplay: true,
-    swipeToSlide: true,
-    // lazyLoad: false,
-    autoplaySpeed: 10000,
+    beforeChange: (oldIndex, newIndex) => setActiveSlideIndex(newIndex),
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1536,
+        settings: {
+          slidesToShow: 3.5,
+        },
+      },
+      {
+        breakpoint: 1300,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2.75,
+        },
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 2.5,
+        },
+      },
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 1.75,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
-    <Box
-      sx={{ overflow: "hidden", height: "100%", zIndex: 1 }}
-      className="carousal"
-    >
+    <Box sx={{ overflowX: "hidden", position: "relative" }}>
       {data.length > 0 &&
         categories.category_type &&
         categories.category_type !== "ad_category" && (
           <>
-            <Stack
-              spacing={2}
-              direction="row"
-              alignItems="center"
-              sx={{ mb: 1 }}
-            >
-              <NetflixNavigationLink
-                to={`/categories/${categories.category_id}/${categories.category_type}/${categories.tile_type}`}
-              >
-                {`${categories.name} `}
-                <KeyboardArrowRightIcon style={{ fontSize: "26px" }} />
-              </NetflixNavigationLink>
-            </Stack>
-
-            <RootStyle>
-              <CustomNavigation
-                isEnd={isEnd}
-                arrowWidth={ARROW_MAX_WIDTH}
-                onNext={handleSlideNext}
-                onPrevious={handlePrevious}
-                activeSlideIndex={activeSlideIndex}
-              >
-                <StyledSlider
-                  ref={sliderRef}
-                  visibleOverflow={visibleOverflow || false}
-                  {...settings}
-                  padding={ARROW_MAX_WIDTH}
-                  theme={theme}
-                  slidesToScroll={1}
-                >
-                  {data
-                    // .filter((i) => !!i.backdrop_path)
-                    .map((item, index) => {
-                      return (
-                        <VideoCardMedia
-                          video={item}
-                          isActive={index === activeSlideIndex}
-                        />
-                      );
-                      // <p>Name</p>
-                    })}
-                </StyledSlider>
-              </CustomNavigation>
-            </RootStyle>
-          </>
-        )}
-      {categories.category_type &&
-        categories.category_type === "ad_category" &&
-        data.length && (
-          <StyledSlider
-            visibleOverflow={false}
-            ref={sliderRef}
-            {...adImgSettings}
-            padding={ARROW_MAX_WIDTH}
-            theme={theme}
-            slidesToScroll={1}
-            // tile={genre?.tile_type}
-            // screenWidth={screenWidth}
-          >
-            {data.length &&
-              data.map((movie, index) => {
+            <SamplePrevArrow onClick={() => sliderRef?.current?.slickPrev()} />
+            <Slider ref={sliderRef} {...settings}>
+              {data.map((item, index) => {
                 return (
-                  <VideoCardMedia
-                    video={movie}
-                    isActive={index === activeSlideIndex}
-                  />
+                  <Box key={index} sx={{ borderRadius: "16px" }}>
+                    {index !== activeSlideIndex ? (
+                      <Image
+                        path={
+                          item.image_landscape ||
+                          item.image_portrait ||
+                          item.image_square ||
+                          item.thumb_path
+                        }
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "16px",
+                        }}
+                      />
+                    ) : (
+                      <VideoJSPlayer
+                        //@ts-ignore
+                        _hlsStreamUrl={item.trailer_link}
+                        isActive={index === activeSlideIndex}
+                      />
+                    )}
+                  </Box>
                 );
               })}
-            {data.length == 0 && <RowSkeleton />}
-          </StyledSlider>
+            </Slider>
+            <SampleNextArrow onClick={() => sliderRef?.current?.slickNext()} />
+          </>
         )}
     </Box>
   );

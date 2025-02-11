@@ -133,14 +133,21 @@ const VideoJSPlayer = ({
 
     return (
       <>
-        <div data-vjs-player style={{ width: "100%", height: "100%" }}>
-          <div ref={videoRef as LegacyRef<HTMLDivElement> | undefined} />
+        <div
+          data-vjs-player
+          style={{ width: "100%", height: "100%", borderRadius: "16px" }}
+        >
+          <div
+            style={{ borderRadius: "16px" }}
+            ref={videoRef as LegacyRef<HTMLDivElement> | undefined}
+          />
         </div>
         <style>
           {`
           .vjs-loading-spinner {
             margin-top: 0 !important;
             margin-left: 0 !important;
+            border-radius: "16px"
           }
         `}
         </style>

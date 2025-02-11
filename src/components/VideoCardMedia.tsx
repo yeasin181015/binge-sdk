@@ -54,7 +54,6 @@ export default function VideoCardMedia({
   return (
     <Box
       sx={{
-        width: "100%",
         position: "relative",
       }}
     >
@@ -163,8 +162,7 @@ export default function VideoCardMedia({
 
       <Box
         sx={{
-          width: "100%",
-          aspectRatio: "16/9",
+          border: "solid 2px green",
         }}
       >
         <Image

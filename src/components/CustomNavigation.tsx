@@ -5,7 +5,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { MouseEventHandler, ReactNode } from "react";
 
 const ArrowStyle = styled(Box)(({ theme }) => ({
-  top: 0,
   bottom: 0,
   position: "absolute",
   zIndex: 9,
