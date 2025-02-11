@@ -17,7 +17,7 @@ const TopContainer = () => {
   let imageSrc = "/assets/images/HeroImage.png";
 
   if (isXs) {
-    imageSrc = "/assets/images/HeroImage.png";
+    imageSrc = "/assets/images/Hero Portrait.jpg";
   } else if (isLg) {
     imageSrc = "/assets/images/HeroImage.png";
   }
@@ -49,7 +49,7 @@ const TopContainer = () => {
           display: "flex",
           alignItems: "center",
           background:
-            "linear-gradient(to right, #464A54 0%, #464A54 47%, rgba(255, 255, 255, 0.00))",
+            {xs: "linear-gradient(to right, #464A54 0%, #464A54 35%, rgba(255, 255, 255, 0.00))", md:"linear-gradient(to right, #464A54 0%, #464A54 47%, rgba(255, 255, 255, 0.00))"},
         }}
       >
         <Container
@@ -70,7 +70,7 @@ const TopContainer = () => {
                 ? "48px"
                 : isLg
                 ? "38px"
-                : { xs: "18px", sm: "25px", md: "35px" },
+                : { xs: "20px", sm: "25px", md: "35px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -93,7 +93,7 @@ const TopContainer = () => {
                 ? "48px"
                 : isLg
                 ? "38px"
-                : { xs: "18px", sm: "25px", md: "35px" },
+                : { xs: "20px", sm: "25px", md: "35px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -124,9 +124,9 @@ const TopContainer = () => {
               padding: { xs: "8px 14px", lg: "12px 18px" },
               color: "#fff",
               textTransform: "none",
-              fontSize: { xs: "12px", sm: "14px", lg: "16px" },
+              fontSize: { xs: "15px", sm: "14px", lg: "16px" },
               fontWeight: { xs: "400", lg: "600" },
-              marginTop: { xs: "10px", md: "30px" },
+              marginTop: { xs: "15px", md: "30px" },
             }}
           >
             Watch Now
