@@ -3,7 +3,6 @@ import "./App.css";
 import { handleAnonLogin } from "./utils/handleAnnonLogin";
 import Banner from "./components/Banner";
 import { Box, Stack, useMediaQuery } from "@mui/material";
-import PortalProvider, { usePortal } from "./components/PortalProvider";
 import SliderRowForGenre from "./components/SliderRowForGenre";
 import VideoPortalContainer from "./components/VideoPortalContainer";
 import { GetCookiesValue } from "./utils/cookie";
@@ -30,13 +29,10 @@ export interface CategoryProps {
 }
 
 function App() {
-  const setPortal = usePortal();
   const [banners, setBanners] = useState([]);
   const [categoryList, setCategoryList] = useState<CategoryProps[]>([]);
 
   const token = useAnonToken();
-
-  const matchesSm = useMediaQuery("(max-width:767px)");
 
   const fetchData = async () => {
     const res = await fetch(
@@ -78,42 +74,27 @@ function App() {
   if (banners?.length === 0) return <p>Loading...</p>;
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        // minHeight: "100vh",
-        bgcolor: "#fff",
-        // border: "solid 1px white",
-      }}
-    >
-      <Stack
-        spacing={8}
-        onWheel={() => {
-          setPortal(null, null);
+    <Box>
+      <TopContainer />
+      <TextContainer />
+      <Box
+        sx={{
+          zIndex: 1,
+          marginTop: "100px !important",
         }}
       >
-        <TopContainer />
-        <TextContainer />
-        <Box
-          sx={{
-            zIndex: 1,
-            marginTop: "100px !important",
-          }}
-        >
-          {categoryList?.map((item, index) => (
-            <Box key={item.category_id}>
-              <SliderRowForGenre
-                key={item.category_id}
-                category={item}
-                type="cardWithHover"
-                visibleOverflow={true}
-                token={token ?? ""}
-              />
-            </Box>
-          ))}
-        </Box>
-      </Stack>
-      <VideoPortalContainer />
+        {categoryList?.map((item, index) => (
+          <Box key={item.category_id}>
+            <SliderRowForGenre
+              key={item.category_id}
+              category={item}
+              type="cardWithHover"
+              visibleOverflow={true}
+              token={token ?? ""}
+            />
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 }

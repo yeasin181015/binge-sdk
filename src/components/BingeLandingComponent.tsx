@@ -1,13 +1,21 @@
 import React from "react";
+import { Box } from "@mui/material";
+import palette from "../theme/palette";
+import BingeSlider from "./BingeSlider";
+import TopContainer from "./TopContainer";
+import TextContainer from "./TextContainer";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-interface BingeLandingComponentProps {
-  text: string;
-}
-
-const BingeLandingComponent: React.FC<BingeLandingComponentProps> = ({
-  text,
-}) => {
-  return <div>text me when you reach home {text}</div>;
+const BingeLandingComponent = () => {
+  return (
+    <ThemeProvider theme={createTheme({ palette })}>
+      <Box>
+        <TopContainer />
+        <TextContainer />
+        <BingeSlider />
+      </Box>
+    </ThemeProvider>
+  );
 };
 
 export default BingeLandingComponent;

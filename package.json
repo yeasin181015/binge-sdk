@@ -1,6 +1,6 @@
 {
   "name": "binge-sdk",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Binge SDK provides binge landing page for third parties",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

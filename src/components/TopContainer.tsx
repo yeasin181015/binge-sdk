@@ -48,18 +48,21 @@ const TopContainer = () => {
           height: "100%",
           display: "flex",
           alignItems: "center",
-          background:
-            {xs: "linear-gradient(to right, #464A54 0%, #464A54 35%, rgba(255, 255, 255, 0.00))", md:"linear-gradient(to right, #464A54 0%, #464A54 47%, rgba(255, 255, 255, 0.00))"},
+          background: {
+            xs: "linear-gradient(to right, #464A54 0%, #464A54 35%, rgba(255, 255, 255, 0.00))",
+            md: "linear-gradient(to right, #464A54 0%, #464A54 47%, rgba(255, 255, 255, 0.00))",
+          },
         }}
       >
         <Container
           sx={{
             zIndex: 1,
+            paddingX: "0px !important",
             marginLeft: is1400px
-              ? "161px"
+              ? "150px"
               : isLg
               ? "80px"
-              : { xs: "20px", md: "100px" },
+              : { xs: "20px", sm: "50px", md: "100px" },
           }}
         >
           <Typography
@@ -70,7 +73,7 @@ const TopContainer = () => {
                 ? "48px"
                 : isLg
                 ? "38px"
-                : { xs: "20px", sm: "25px", md: "35px" },
+                : { xs: "20px", sm: "25px", md: "30px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -81,7 +84,13 @@ const TopContainer = () => {
               component="img"
               src="/assets/images/binge-logo.svg"
               alt="binge"
-              sx={{ width: is1400px ? 165 : isLg ? 150 : { xs: 80, sm: 100, md: 135 } }}
+              sx={{
+                width: is1400px
+                  ? 165
+                  : isLg
+                  ? 150
+                  : { xs: 80, sm: 100, md: 135 },
+              }}
             />
             <span className="banner-text">is an online video</span>
           </Typography>
@@ -93,7 +102,7 @@ const TopContainer = () => {
                 ? "48px"
                 : isLg
                 ? "38px"
-                : { xs: "20px", sm: "25px", md: "35px" },
+                : { xs: "20px", sm: "25px", md: "30px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
