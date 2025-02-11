@@ -95,7 +95,7 @@ export default function SlickSlider({
         sx={{
           ...style,
           top: "50%",
-          right: "10px", // Ensure it's visible
+          right: 0, // Ensure it's visible
           transform: "translateY(-50%)",
           zIndex: 10, // Make sure it's above slides
           display: "block !important", // Override any hidden styles
@@ -117,7 +117,7 @@ export default function SlickSlider({
         sx={{
           ...style,
           top: "50%",
-          left: "0px", // Ensure it's visible
+          left: 0, // Ensure it's visible
           transform: "translateY(-50%)",
           zIndex: 10, // Make sure it's above slides
           display: "block !important", // Override any hidden styles

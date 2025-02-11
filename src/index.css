@@ -30,20 +30,34 @@ body {
   padding-left: 16px;
   padding-right: 16px;
 }
-.slick-list {
-  height: 245px
-}
 
 @media only screen and (max-width: 600px) {
+  .slick-slide.slick-active {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+ /* .slick-list {
+  height: 245px
+} */
+
+.slick-track {
+  display: flex !important;
+  align-items: center;
+}
+
+/* @media only screen and (max-width: 600px) {
   .slick-list {
-    height: 345px;
+   
+    height: 300px;
   }
 }
 @media only screen and (max-width: 450px) {
   .slick-list {
-    height: 200px;
+    height: 240px;
   }
-}
+}  */
 
 
 
