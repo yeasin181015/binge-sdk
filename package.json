@@ -37,8 +37,10 @@
     "@mui/icons-material": "^5.16.14",
     "@mui/material": "^5.10.0",
     "@mui/styles": "^5.14.11",
+    "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-typescript": "^12.1.2",
     "@silvermine/videojs-chromecast": "^1.5.0",
+    "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -60,6 +62,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-use": "^17.6.0",
+    "rollup-plugin-css-only": "^4.5.2",
     "rollup-plugin-typescript2": "^0.36.0",
     "slick-carousel": "^1.8.1",
     "typescript": "^4.4.2",
@@ -79,7 +82,7 @@
     "youbora-adapter-videojs": "^6.8.21"
   },
   "scripts": {
-    "build": "tsc && copy /y dist\\* .\\",
+    "build": "tsc",
     "start": "react-scripts start"
   },
   "eslintConfig": {

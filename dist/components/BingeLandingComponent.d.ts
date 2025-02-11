@@ -1,6 +1,2 @@
-import React from "react";
-interface BingeLandingComponentProps {
-    text: string;
-}
-declare const BingeLandingComponent: React.FC<BingeLandingComponentProps>;
+declare const BingeLandingComponent: () => import("react/jsx-runtime").JSX.Element;
 export default BingeLandingComponent;
