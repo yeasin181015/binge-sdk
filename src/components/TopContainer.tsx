@@ -1,5 +1,10 @@
-"use client";
-import { Box, Container, Typography, Button, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  useMediaQuery,
+} from "@mui/material";
 import { ReactComponent as WatchIcon } from "../images/watch.svg";
 import "@fontsource/manrope";
 import "@fontsource/manrope/700.css";
@@ -7,6 +12,7 @@ import "@fontsource/manrope/700.css";
 const TopContainer = () => {
   const isXs = useMediaQuery("(max-width:600px)");
   const isLg = useMediaQuery("(min-width:1200px)");
+  const is1400px = useMediaQuery("(min-width:1400px)");
 
   let imageSrc = "/assets/images/HeroImage.png";
 
@@ -29,7 +35,7 @@ const TopContainer = () => {
         <img
           src={imageSrc}
           alt="hero"
-          style={{ width: "80%", maxWidth: "1003px", height: "auto" }}
+          style={{ width: "70%", maxWidth: "1003px", height: "auto" }}
         />
       </Box>
 
@@ -38,7 +44,7 @@ const TopContainer = () => {
           position: "absolute",
           top: 0,
           left: 0,
-          width: "80%",
+          width: { xs: "100%", md: "80%" },
           height: "100%",
           display: "flex",
           alignItems: "center",
@@ -46,12 +52,25 @@ const TopContainer = () => {
             "linear-gradient(to right, #464A54 0%, #464A54 47%, rgba(255, 255, 255, 0.00))",
         }}
       >
-        <Container sx={{ zIndex: 1, marginLeft: { xs: "40px", lg: "161px" } }}>
+        <Container
+          sx={{
+            zIndex: 1,
+            marginLeft: is1400px
+              ? "161px"
+              : isLg
+              ? "80px"
+              : { xs: "20px", md: "100px" },
+          }}
+        >
           <Typography
             variant="h3"
             sx={{
-              fontWeight: 700,
-              fontSize: { xs: "25px", lg: "48px" },
+              fontWeight: { xs: "400", md: "700" },
+              fontSize: is1400px
+                ? "48px"
+                : isLg
+                ? "38px"
+                : { xs: "18px", sm: "25px", md: "35px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -62,7 +81,7 @@ const TopContainer = () => {
               component="img"
               src="/assets/images/binge-logo.svg"
               alt="binge"
-              sx={{ width: { xs: 100, lg: 165 } }}
+              sx={{ width: is1400px ? 165 : isLg ? 150 : { xs: 80, sm: 100, md: 135 } }}
             />
             <span className="banner-text">is an online video</span>
           </Typography>
@@ -70,7 +89,11 @@ const TopContainer = () => {
             variant="h3"
             sx={{
               fontWeight: 700,
-              fontSize: { xs: "25px", lg: "48px" },
+              fontSize: is1400px
+                ? "48px"
+                : isLg
+                ? "38px"
+                : { xs: "18px", sm: "25px", md: "35px" },
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -90,6 +113,7 @@ const TopContainer = () => {
           </Typography>
 
           <Button
+            className="banner-text"
             sx={{
               background: "#FF4A50",
               borderRadius: "32px",
@@ -100,9 +124,9 @@ const TopContainer = () => {
               padding: { xs: "8px 14px", lg: "12px 18px" },
               color: "#fff",
               textTransform: "none",
-              fontSize: { xs: "14px", lg: "16px" },
-              fontWeight: "600",
-              marginTop: "30px",
+              fontSize: { xs: "12px", sm: "14px", lg: "16px" },
+              fontWeight: { xs: "400", lg: "600" },
+              marginTop: { xs: "10px", md: "30px" },
             }}
           >
             Watch Now
